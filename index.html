@@ -5,15 +5,16 @@
 <title>For Quazii ❤️</title>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
     body {
         margin: 0;
         padding: 0;
         overflow: hidden;
         font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(120deg, #ff9a9e, #fad0c4, #ffd1ff, #a1c4fd);
+        background: linear-gradient(135deg, #ffd6e8, #ffebf7, #ffe6f0, #fff0f5);
         background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
+        animation: gradientBG 15s ease infinite alternate;
         color: white;
         text-align: center;
     }
@@ -26,34 +27,36 @@
 
     h1 {
         font-family: 'Pacifico', cursive;
-        font-size: 60px;
-        margin-top: 50px;
-        text-shadow: 2px 2px 15px #ff4b7d;
+        font-size: 80px;
+        margin-top: 40px;
+        text-shadow: 3px 3px 20px #ff4b7d;
     }
 
     #mainText {
-        font-size: 24px;
+        font-family: 'Sacramento', cursive;
+        font-size: 32px;
         margin: 20px auto;
-        width: 70%;
-        line-height: 1.6;
+        width: 80%;
+        line-height: 1.8;
         color: #fff;
-        text-shadow: 2px 2px 8px #ff4b7d;
+        text-shadow: 3px 3px 12px #ff4b7d;
     }
 
     button {
-        padding: 12px 25px;
-        margin: 15px;
+        padding: 15px 35px;
+        margin: 20px;
         border: none;
-        border-radius: 20px;
+        border-radius: 25px;
         background: white;
         color: #ff4b7d;
-        font-size: 18px;
+        font-size: 22px;
         cursor: pointer;
         transition: 0.3s;
+        font-weight: bold;
     }
 
     button:hover {
-        transform: scale(1.1);
+        transform: scale(1.15);
         background: #ffe6eb;
     }
 
@@ -64,9 +67,9 @@
 
     #result {
         margin-top: 30px;
-        font-size: 28px;
+        font-size: 36px;
         animation: fadeIn 1s;
-        text-shadow: 2px 2px 8px #ff4b7d;
+        text-shadow: 3px 3px 12px #ff4b7d;
     }
 
     @keyframes fadeIn {
@@ -74,54 +77,33 @@
         to {opacity: 1;}
     }
 
-    /* floating hearts */
+    /* Floating hearts */
     .heart {
         position: absolute;
-        color: red;
-        animation: float 5s linear infinite;
+        color: #ff4b7d;
+        animation: float 6s linear infinite;
         user-select: none;
     }
 
     @keyframes float {
-        from {transform: translateY(100vh);}
-        to {transform: translateY(-10vh);}
+        0% {transform: translateY(100vh);}
+        100% {transform: translateY(-10vh);}
     }
 
-    /* side box with picture */
-    .side-box {
-        position: fixed;
-        top: 100px;
-        right: 50px;
-        width: 250px;
-        height: 350px;
-        background: rgba(255,255,255,0.2);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 0 20px #ff4b7d;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        animation: floatBox 3s ease-in-out infinite alternate;
+    /* Floating bubbles */
+    .bubble {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 192, 203, 0.5);
+        border-radius: 50%;
+        animation: rise 8s linear infinite;
     }
 
-    .side-box img {
-        width: 90%;
-        border-radius: 15px;
-        box-shadow: 0 0 15px #ff4b7d;
-    }
-
-    .side-box p {
-        color: white;
-        font-size: 18px;
-        margin-top: 10px;
-        text-shadow: 2px 2px 8px #ff4b7d;
-    }
-
-    @keyframes floatBox {
-        0% {transform: translateY(0);}
-        100% {transform: translateY(-20px);}
+    @keyframes rise {
+        0% {transform: translateY(100vh) scale(1);}
+        50% {transform: scale(1.3);}
+        100% {transform: translateY(-10vh) scale(0.8);}
     }
 
 </style>
@@ -139,18 +121,13 @@
 
 <p id="result"></p>
 
-<!-- Side box with picture -->
-<div class="side-box">
-    <img src="quazii.png" alt="Quazii">
-    <p>Quazii ❤️</p>
-</div>
-
 <script>
-    const text = "Quazii... 💖\n\n" +
-    "These 3 months with you feel like the most beautiful dream I never want to wake up from... 🥺\n\n" +
-    "You came into my life and suddenly everything became softer, brighter, and full of love... 🌸\n\n" +
-    "Your smile, your voice, your little things... everything about you makes my heart fall for you again and again... 💕\n\n" +
-    "I didn’t just find a girlfriend in you... I found my peace, my happiness, my everything... ❤️";
+    // Big cute English song-style romantic message
+    const text = `"Quazii... 💖\n
+You are the melody in my heart, the sunshine in my soul... 🌸\n
+Every laugh, every smile, every little thing about you... makes my world brighter... ✨\n
+I never knew love until I met you, and now my heart dances to your rhythm... 💕\n
+Forever yours, forever mine, forever us... ❤️"`;
 
     let i = 0;
 
@@ -158,45 +135,52 @@
         if (i < text.length) {
             document.getElementById("mainText").innerHTML += text.charAt(i);
             i++;
-            setTimeout(typeEffect, 40);
+            setTimeout(typeEffect, 45);
         }
     }
 
     typeEffect();
 
-    // show buttons after 3 minutes (for testing: 3000ms)
+    // Show buttons after 3 min (for test 3000ms)
     setTimeout(() => {
         document.getElementById("options").style.display = "block";
-    }, 3000); // change to 180000 for final 3 min
+    }, 3000); // change 180000 for 3 min
 
     function showMessage(num) {
         let message = "";
-
         if (num === 1) {
-            message = "Every moment with you, Quazii, feels like magic... ✨ Even the smallest talks with you become my favorite memories... 💕";
-        } 
-        else if (num === 2) {
-            message = "I love you because you're you, Quazii... 💖 Your heart, your care, your love... everything makes you perfect for me 🥺";
-        } 
-        else if (num === 3) {
-            message = "I promise to stand by you, love you, and choose you every single day, Quazii... no matter what ❤️";
+            message = `"Every moment with you is like a lyric from my favorite song... 🎵💖 Dancing in our little world of love..."`;
+        } else if (num === 2) {
+            message = `"I love you because you make even the smallest moments magical... 🌸 Your smile, your care, your soul ❤️"`;
+        } else if (num === 3) {
+            message = `"I promise to hold your hand through every storm, to laugh with you, love you, and choose you every day... 💕✨"`;
         }
-
         document.getElementById("result").innerHTML = message;
     }
 
-    // floating hearts
+    // Floating hearts
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        heart.style.fontSize = Math.random() * 30 + 30 + "px";
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
+        setTimeout(() => heart.remove(), 6000);
     }
+    setInterval(createHeart, 400);
 
-    setInterval(createHeart, 300);
+    // Floating bubbles
+    function createBubble() {
+        const bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+        bubble.style.left = Math.random() * 100 + "vw";
+        bubble.style.width = bubble.style.height = (Math.random() * 15 + 15) + "px";
+        document.body.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 8000);
+    }
+    setInterval(createBubble, 500);
+
 </script>
 
 </body>
