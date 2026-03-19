@@ -17,7 +17,7 @@ body {
     color: white;
 }
 
-/* background glow */
+/* glowing background */
 .bg {
     position: absolute;
     width: 100%;
@@ -32,25 +32,33 @@ body {
     background: radial-gradient(circle, #ff4b7d, transparent);
     border-radius: 50%;
     filter: blur(120px);
-    animation: move 15s infinite alternate;
+    animation: move 12s infinite alternate;
 }
+
+.blob:nth-child(2){ left:60%; top:40%; }
+.blob:nth-child(3){ left:30%; top:70%; }
 
 @keyframes move {
     from {transform: translate(0,0);}
     to {transform: translate(120px,-120px);}
 }
 
-/* main page */
-#mainPage {
-    transition: 1s;
+/* pages */
+#mainPage, #secondPage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
 }
 
+/* title */
 h1 {
     font-family: 'Pacifico', cursive;
     font-size: 80px;
     margin-top: 40px;
 }
 
+/* main text */
 #mainText {
     font-family: 'Sacramento', cursive;
     font-size: 40px;
@@ -59,6 +67,7 @@ h1 {
     line-height: 2;
 }
 
+/* buttons */
 button {
     padding: 15px 30px;
     margin: 10px;
@@ -68,22 +77,26 @@ button {
     background: rgba(255,255,255,0.2);
     color: white;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-/* new page */
+button:hover {
+    transform: scale(1.2);
+    background: rgba(255,255,255,0.3);
+}
+
+/* second page */
 #secondPage {
     display: none;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     animation: fadeIn 1s;
 }
 
 .bigText {
-    font-size: 42px;
+    font-size: 48px;
     width: 70%;
-    margin: 100px auto;
     line-height: 2;
     font-family: 'Sacramento', cursive;
 }
@@ -93,18 +106,20 @@ button {
     to {opacity: 1;}
 }
 
-/* animated hand */
+/* hand animation */
 .hand {
-    position: absolute;
-    font-size: 80px;
-    left: -100px;
+    position: fixed;
+    font-size: 90px;
+    left: -150px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 9999;
     animation: handMove 2s forwards;
 }
 
 @keyframes handMove {
-    to {left: 50%;}
+    0% {left: -150px;}
+    100% {left: 40%;}
 }
 
 </style>
@@ -114,6 +129,8 @@ button {
 
 <div class="bg">
     <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
 </div>
 
 <!-- MAIN PAGE -->
@@ -121,7 +138,7 @@ button {
     <h1>Quazii ❤️</h1>
     <p id="mainText"></p>
 
-    <div id="options">
+    <div id="options" style="display:none;">
         <button onclick="startAnimation(1)">Our Moments 💕</button>
         <button onclick="startAnimation(2)">Why You ❤️</button>
         <button onclick="startAnimation(3)">My Promise 💖</button>
@@ -135,6 +152,7 @@ button {
 
 <script>
 
+// typing text
 const text = `Quazii... 💖
 
 You're my peace...
@@ -151,6 +169,7 @@ function typeEffect() {
 }
 typeEffect();
 
+// show buttons
 setTimeout(()=>{
     document.getElementById("options").style.display="block";
 },3000);
@@ -158,33 +177,39 @@ setTimeout(()=>{
 // animation + page switch
 function startAnimation(num) {
 
+    // remove old hand if exists
+    const oldHand = document.querySelector(".hand");
+    if(oldHand) oldHand.remove();
+
     const hand = document.createElement("div");
-    hand.classList.add("hand");
+    hand.className = "hand";
     hand.innerHTML = "🤲🌹";
     document.body.appendChild(hand);
 
+    // fade main page
     setTimeout(()=>{
-        document.getElementById("mainPage").style.opacity="0";
+        document.getElementById("mainPage").style.opacity = "0";
     },1500);
 
     setTimeout(()=>{
-        document.getElementById("mainPage").style.display="none";
-        document.getElementById("secondPage").style.display="block";
+        document.getElementById("mainPage").style.display = "none";
+
+        const second = document.getElementById("secondPage");
+        second.style.display = "flex";
 
         let msg = "";
 
         if(num===1){
-            msg = `Every moment with you feels magical... 💕
+            msg = `Every moment with you feels like a dream... 💕
 
 From random laughs to deep late night talks...
-Every second becomes a memory I never want to lose...
+Every second becomes something unforgettable...
 
 With you...
-Life feels beautiful... ✨`;
+Life feels perfect... ✨`;
         }
-
         else if(num===2){
-            msg = `I love you for the way you exist... ❤️
+            msg = `I love you for everything you are... ❤️
 
 The way you smile...
 The way you care...
@@ -192,12 +217,11 @@ The way you make my world brighter...
 
 You're my favorite feeling... 🌸`;
         }
-
         else{
-            msg = `I promise to stand beside you always... 💖
+            msg = `I promise to always stay with you... 💖
 
-Through every storm...
-Through every happiness...
+Through every hard time...
+Through every happy moment...
 
 I will choose you...
 Again and again...
