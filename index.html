@@ -23,23 +23,22 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    transition: opacity 1s;
 }
 
-/* show first */
 #page1 {
     display: flex;
 }
 
 /* text */
 .text {
-    font-size: 28px;
+    font-size: 30px;
     width: 70%;
     line-height: 1.8;
 }
 
-/* big final */
 .big {
-    font-size: 40px;
+    font-size: 42px;
 }
 
 /* button */
@@ -50,11 +49,13 @@ button {
     border-radius: 20px;
     border: none;
     cursor: pointer;
+    background: white;
+    color: black;
 }
 
-/* heart beat */
+/* heart */
 .heart {
-    font-size: 80px;
+    font-size: 90px;
     animation: beat 1s infinite;
 }
 
@@ -64,7 +65,8 @@ button {
     100% {transform: scale(1);}
 }
 
-.fade {
+/* fade */
+.fadeIn {
     animation: fadeIn 1s;
 }
 
@@ -72,6 +74,7 @@ button {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
 </style>
 </head>
 
@@ -85,7 +88,7 @@ button {
 
 <!-- PAGE 2 -->
 <div id="page2" class="page">
-    <div class="text fade">
+    <div class="text fadeIn">
         I don't know when it started...  
         Maybe in a random conversation...  
         Maybe in your smile...  
@@ -98,7 +101,7 @@ button {
 
 <!-- PAGE 3 -->
 <div id="page3" class="page">
-    <div class="text fade">
+    <div class="text fadeIn">
         There are thousands of people in this world...  
         But my heart chose YOU... ❤️  
 
@@ -112,7 +115,7 @@ button {
 <!-- FINAL PAGE -->
 <div id="page4" class="page">
     <div class="heart">❤️</div>
-    <div class="big fade">
+    <div class="big fadeIn">
         I didn't just fall for you...  
         I found home in you... 💖  
 
@@ -124,7 +127,7 @@ button {
 
 <script>
 
-// typing effect first page
+// typing effect
 const text = `Hey... 💭
 
 I wanted to tell you something...  
@@ -144,10 +147,17 @@ function typing() {
 }
 typing();
 
-// page switch
+// smooth page switch
 function nextPage(num) {
-    document.querySelectorAll(".page").forEach(p => p.style.display="none");
-    document.getElementById("page"+num).style.display="flex";
+    const current = document.querySelector(".page[style*='flex'], #page1");
+    
+    document.querySelectorAll(".page").forEach(p => {
+        p.style.display = "none";
+    });
+
+    const next = document.getElementById("page"+num);
+    next.style.display = "flex";
+    next.classList.add("fadeIn");
 }
 
 </script>
