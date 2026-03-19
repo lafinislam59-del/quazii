@@ -2,235 +2,152 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Quazii ❤️</title>
+<title>For You ❤️</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
-
 body {
     margin: 0;
-    overflow: hidden;
+    background: black;
+    color: white;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    background: #0f0c29;
-    color: white;
-}
-
-/* glowing background */
-.bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.blob {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #ff4b7d, transparent);
-    border-radius: 50%;
-    filter: blur(120px);
-    animation: move 12s infinite alternate;
-}
-
-.blob:nth-child(2){ left:60%; top:40%; }
-.blob:nth-child(3){ left:30%; top:70%; }
-
-@keyframes move {
-    from {transform: translate(0,0);}
-    to {transform: translate(120px,-120px);}
+    overflow: hidden;
 }
 
 /* pages */
-#mainPage, #secondPage {
+.page {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-}
-
-/* title */
-h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 80px;
-    margin-top: 40px;
-}
-
-/* main text */
-#mainText {
-    font-family: 'Sacramento', cursive;
-    font-size: 40px;
-    width: 70%;
-    margin: auto;
-    line-height: 2;
-}
-
-/* buttons */
-button {
-    padding: 15px 30px;
-    margin: 10px;
-    border-radius: 25px;
-    border: none;
-    font-size: 20px;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.2);
-    background: rgba(255,255,255,0.3);
-}
-
-/* second page */
-#secondPage {
     display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    animation: fadeIn 1s;
 }
 
-.bigText {
-    font-size: 48px;
+/* show first */
+#page1 {
+    display: flex;
+}
+
+/* text */
+.text {
+    font-size: 28px;
     width: 70%;
-    line-height: 2;
-    font-family: 'Sacramento', cursive;
+    line-height: 1.8;
+}
+
+/* big final */
+.big {
+    font-size: 40px;
+}
+
+/* button */
+button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* heart beat */
+.heart {
+    font-size: 80px;
+    animation: beat 1s infinite;
+}
+
+@keyframes beat {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.3);}
+    100% {transform: scale(1);}
+}
+
+.fade {
+    animation: fadeIn 1s;
 }
 
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
 }
-
-/* hand animation */
-.hand {
-    position: fixed;
-    font-size: 90px;
-    left: -150px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 9999;
-    animation: handMove 2s forwards;
-}
-
-@keyframes handMove {
-    0% {left: -150px;}
-    100% {left: 40%;}
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="bg">
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+    <div class="text" id="text1"></div>
+    <button onclick="nextPage(2)">Continue...</button>
 </div>
 
-<!-- MAIN PAGE -->
-<div id="mainPage">
-    <h1>Quazii ❤️</h1>
-    <p id="mainText"></p>
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+    <div class="text fade">
+        I don't know when it started...  
+        Maybe in a random conversation...  
+        Maybe in your smile...  
 
-    <div id="options" style="display:none;">
-        <button onclick="startAnimation(1)">Our Moments 💕</button>
-        <button onclick="startAnimation(2)">Why You ❤️</button>
-        <button onclick="startAnimation(3)">My Promise 💖</button>
+        But slowly...  
+        You became my favorite part of the day... 💭
     </div>
+    <button onclick="nextPage(3)">Continue...</button>
 </div>
 
-<!-- SECOND PAGE -->
-<div id="secondPage">
-    <p id="bigMessage" class="bigText"></p>
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+    <div class="text fade">
+        There are thousands of people in this world...  
+        But my heart chose YOU... ❤️  
+
+        Not perfect...  
+        Not flawless...  
+        But perfectly mine... ✨
+    </div>
+    <button onclick="nextPage(4)">Continue...</button>
+</div>
+
+<!-- FINAL PAGE -->
+<div id="page4" class="page">
+    <div class="heart">❤️</div>
+    <div class="big fade">
+        I didn't just fall for you...  
+        I found home in you... 💖  
+
+        And if I had to choose again...  
+        I would still choose YOU...  
+        Every single time... 🌙
+    </div>
 </div>
 
 <script>
 
-// typing text
-const text = `Quazii... 💖
+// typing effect first page
+const text = `Hey... 💭
 
-You're my peace...
-My happiness...
-My everything... ✨`;
+I wanted to tell you something...  
+Not just something random...  
+Something real...  
+
+So... just read this till the end... ❤️`;
 
 let i = 0;
-function typeEffect() {
+
+function typing() {
     if (i < text.length) {
-        document.getElementById("mainText").innerHTML += text.charAt(i);
+        document.getElementById("text1").innerHTML += text.charAt(i);
         i++;
-        setTimeout(typeEffect, 40);
+        setTimeout(typing, 40);
     }
 }
-typeEffect();
+typing();
 
-// show buttons
-setTimeout(()=>{
-    document.getElementById("options").style.display="block";
-},3000);
-
-// animation + page switch
-function startAnimation(num) {
-
-    // remove old hand if exists
-    const oldHand = document.querySelector(".hand");
-    if(oldHand) oldHand.remove();
-
-    const hand = document.createElement("div");
-    hand.className = "hand";
-    hand.innerHTML = "🤲🌹";
-    document.body.appendChild(hand);
-
-    // fade main page
-    setTimeout(()=>{
-        document.getElementById("mainPage").style.opacity = "0";
-    },1500);
-
-    setTimeout(()=>{
-        document.getElementById("mainPage").style.display = "none";
-
-        const second = document.getElementById("secondPage");
-        second.style.display = "flex";
-
-        let msg = "";
-
-        if(num===1){
-            msg = `Every moment with you feels like a dream... 💕
-
-From random laughs to deep late night talks...
-Every second becomes something unforgettable...
-
-With you...
-Life feels perfect... ✨`;
-        }
-        else if(num===2){
-            msg = `I love you for everything you are... ❤️
-
-The way you smile...
-The way you care...
-The way you make my world brighter...
-
-You're my favorite feeling... 🌸`;
-        }
-        else{
-            msg = `I promise to always stay with you... 💖
-
-Through every hard time...
-Through every happy moment...
-
-I will choose you...
-Again and again...
-Every single day... ✨`;
-        }
-
-        document.getElementById("bigMessage").innerHTML = msg;
-
-    },2500);
+// page switch
+function nextPage(num) {
+    document.querySelectorAll(".page").forEach(p => p.style.display="none");
+    document.getElementById("page"+num).style.display="flex";
 }
 
 </script>
