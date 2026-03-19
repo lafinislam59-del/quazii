@@ -11,18 +11,17 @@
 body {
     margin: 0;
     overflow: hidden;
-    text-align: center;
     font-family: 'Segoe UI', sans-serif;
+    text-align: center;
     background: #0f0c29;
     color: white;
 }
 
-/* Animated glowing blobs */
+/* background glow */
 .bg {
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     z-index: -1;
 }
 
@@ -33,72 +32,60 @@ body {
     background: radial-gradient(circle, #ff4b7d, transparent);
     border-radius: 50%;
     filter: blur(120px);
-    animation: move 15s infinite alternate ease-in-out;
-}
-
-.blob:nth-child(2) {
-    left: 60%;
-    top: 40%;
-    animation-delay: 3s;
-}
-
-.blob:nth-child(3) {
-    left: 30%;
-    top: 70%;
-    animation-delay: 6s;
+    animation: move 15s infinite alternate;
 }
 
 @keyframes move {
-    0% {transform: translate(0,0);}
-    100% {transform: translate(100px, -150px);}
+    from {transform: translate(0,0);}
+    to {transform: translate(120px,-120px);}
+}
+
+/* main page */
+#mainPage {
+    transition: 1s;
 }
 
 h1 {
     font-family: 'Pacifico', cursive;
     font-size: 80px;
     margin-top: 40px;
-    text-shadow: 0 0 25px #ff4b7d;
 }
 
 #mainText {
     font-family: 'Sacramento', cursive;
-    font-size: 42px;
-    width: 75%;
+    font-size: 40px;
+    width: 70%;
     margin: auto;
     line-height: 2;
-    text-shadow: 0 0 15px #ff4b7d;
 }
 
 button {
-    padding: 15px 35px;
-    margin: 15px;
-    border-radius: 30px;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 25px;
     border: none;
     font-size: 20px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.2);
     color: white;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+    cursor: pointer;
 }
 
-button:hover {
-    transform: scale(1.2);
-    background: rgba(255,255,255,0.3);
-}
-
-#options {
+/* new page */
+#secondPage {
     display: none;
-    margin-top: 40px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 1s;
 }
 
-#result {
-    font-size: 40px;   /* 🔥 BIGGER TEXT */
+.bigText {
+    font-size: 42px;
     width: 70%;
-    margin: 30px auto;
-    line-height: 1.8;
-    text-shadow: 0 0 12px #ff4b7d;
-    animation: fadeIn 0.8s;
+    margin: 100px auto;
+    line-height: 2;
+    font-family: 'Sacramento', cursive;
 }
 
 @keyframes fadeIn {
@@ -106,31 +93,18 @@ button:hover {
     to {opacity: 1;}
 }
 
-/* Floating hearts */
-.heart {
+/* animated hand */
+.hand {
     position: absolute;
-    animation: float 6s linear infinite;
+    font-size: 80px;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: handMove 2s forwards;
 }
 
-@keyframes float {
-    0% {transform: translateY(100vh);}
-    100% {transform: translateY(-10vh);}
-}
-
-/* Sparkles */
-.sparkle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    animation: sparkle 3s infinite;
-}
-
-@keyframes sparkle {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
+@keyframes handMove {
+    to {left: 50%;}
 }
 
 </style>
@@ -140,36 +114,34 @@ button:hover {
 
 <div class="bg">
     <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
 </div>
 
-<h1>Quazii ❤️</h1>
-<p id="mainText"></p>
+<!-- MAIN PAGE -->
+<div id="mainPage">
+    <h1>Quazii ❤️</h1>
+    <p id="mainText"></p>
 
-<div id="options">
-    <button onclick="showMessage(1)">Our Moments 💕</button>
-    <button onclick="showMessage(2)">Why You ❤️</button>
-    <button onclick="showMessage(3)">My Promise 💖</button>
+    <div id="options">
+        <button onclick="startAnimation(1)">Our Moments 💕</button>
+        <button onclick="startAnimation(2)">Why You ❤️</button>
+        <button onclick="startAnimation(3)">My Promise 💖</button>
+    </div>
 </div>
 
-<p id="result"></p>
+<!-- SECOND PAGE -->
+<div id="secondPage">
+    <p id="bigMessage" class="bigText"></p>
+</div>
 
 <script>
 
 const text = `Quazii... 💖
 
-You're not just someone I love...
-You're my peace, my happiness, my everything... ✨
-
-Every second with you feels unreal...
-Like I'm living inside a dream I never want to wake up from... 💕
-
-I didn't find love...
-I found YOU... ❤️`;
+You're my peace...
+My happiness...
+My everything... ✨`;
 
 let i = 0;
-
 function typeEffect() {
     if (i < text.length) {
         document.getElementById("mainText").innerHTML += text.charAt(i);
@@ -179,64 +151,63 @@ function typeEffect() {
 }
 typeEffect();
 
-setTimeout(() => {
-    document.getElementById("options").style.display = "block";
-}, 3000);
+setTimeout(()=>{
+    document.getElementById("options").style.display="block";
+},3000);
 
-function showMessage(num) {
-    let message = "";
+// animation + page switch
+function startAnimation(num) {
 
-    if (num === 1) {
-        message = `Every moment with you feels like a beautiful song... 🎶💖
+    const hand = document.createElement("div");
+    hand.classList.add("hand");
+    hand.innerHTML = "🤲🌹";
+    document.body.appendChild(hand);
 
-From random laughs to deep talks at night...
+    setTimeout(()=>{
+        document.getElementById("mainPage").style.opacity="0";
+    },1500);
+
+    setTimeout(()=>{
+        document.getElementById("mainPage").style.display="none";
+        document.getElementById("secondPage").style.display="block";
+
+        let msg = "";
+
+        if(num===1){
+            msg = `Every moment with you feels magical... 💕
+
+From random laughs to deep late night talks...
 Every second becomes a memory I never want to lose...
 
-With you... even silence feels magical... ✨`;
-    } 
-    else if (num === 2) {
-        message = `I love you not just for who you are...
-But for how you make me feel... ❤️
+With you...
+Life feels beautiful... ✨`;
+        }
 
-You turn ordinary days into something special...
-And your smile... it's my favorite place in the world... 🌸`;
-    } 
-    else {
-        message = `I promise to stay beside you no matter what... 💖
+        else if(num===2){
+            msg = `I love you for the way you exist... ❤️
 
-To love you in your best days and your worst days...
-To never give up on us...
+The way you smile...
+The way you care...
+The way you make my world brighter...
 
-And to choose you...
+You're my favorite feeling... 🌸`;
+        }
+
+        else{
+            msg = `I promise to stand beside you always... 💖
+
+Through every storm...
+Through every happiness...
+
+I will choose you...
 Again and again...
 Every single day... ✨`;
-    }
+        }
 
-    document.getElementById("result").innerHTML = message;
-}
+        document.getElementById("bigMessage").innerHTML = msg;
 
-// hearts
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 25 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
+    },2500);
 }
-setInterval(createHeart, 400);
-
-// sparkles
-function createSparkle() {
-    const sp = document.createElement("div");
-    sp.classList.add("sparkle");
-    sp.style.left = Math.random() * 100 + "vw";
-    sp.style.top = Math.random() * 100 + "vh";
-    document.body.appendChild(sp);
-    setTimeout(() => sp.remove(), 3000);
-}
-setInterval(createSparkle, 200);
 
 </script>
 
