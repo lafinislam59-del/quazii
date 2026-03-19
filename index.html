@@ -1,25 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 Months of Us</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <title>৩ মাস। আমাদের গল্প।</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Noto+Serif+Bengali:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fff5f5;
+            --bg-color: #fffafb;
             --text-color: #4a4a4a;
             --accent-color: #ff4d6d;
+            --soft-pink: #ffeef2;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', 'Noto Serif Bengali', serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
             scroll-behavior: smooth;
+        }
+
+        /* Falling Hearts Background */
+        .heart-particle {
+            position: fixed;
+            top: -10px;
+            pointer-events: none;
+            color: rgba(255, 77, 109, 0.5);
+            animation: fall linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
 
         .section {
@@ -28,7 +45,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
             opacity: 0;
             transform: translateY(30px);
@@ -41,136 +58,212 @@
         }
 
         h1 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Noto Serif Bengali', serif;
             font-size: 3.5rem;
             color: var(--accent-color);
             margin-bottom: 10px;
         }
 
-        p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            line-height: 1.6;
+        h2 { font-family: 'Noto Serif Bengali', serif; font-size: 2.2rem; color: #d81b60; }
+
+        p { font-size: 1.1rem; max-width: 650px; line-height: 1.8; }
+
+        /* Polaroid Gallery */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
         }
 
-        .heart {
+        .polaroid {
+            background: white;
+            padding: 12px 12px 25px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: 0.3s;
+            width: 260px;
+        }
+
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+
+        .polaroid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border: 1px solid #f0f0f0;
+        }
+
+        .polaroid .caption {
+            font-family: 'Noto Serif Bengali', serif;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 5; }
+
+        /* Timer Section */
+        .timer-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .timer-box {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.1);
+            min-width: 80px;
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
             color: var(--accent-color);
-            font-size: 50px;
-            animation: beat 1s infinite alternate;
         }
 
-        @keyframes beat {
-            to { transform: scale(1.2); }
-        }
+        .timer-label { font-size: 0.8rem; color: #888; text-transform: uppercase; }
 
-        .timeline {
-            border-left: 2px solid var(--accent-color);
-            padding: 20px 0 20px 30px;
-            position: relative;
-            text-align: left;
-            max-width: 400px;
-        }
-
-        .timeline-item {
-            margin-bottom: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -7px;
-            width: 12px;
-            height: 12px;
+        /* Final Secret Button */
+        #secret-btn {
             background: var(--accent-color);
-            border-radius: 50%;
-        }
-
-        #secret-button {
-            background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 50px;
             font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
             transition: 0.3s;
-        }
-
-        #secret-button:hover {
-            transform: scale(1.05);
-        }
-
-        #final-message {
-            display: none;
             margin-top: 20px;
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+        }
+
+        #secret-btn:hover { transform: scale(1.1); background: #ff335c; }
+
+        #final-msg {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: var(--soft-pink);
+            border-radius: 20px;
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 1.8rem;
+            color: #d81b60;
+            border: 2px dashed var(--accent-color);
+        }
+
+        @keyframes heartBeat {
+            to { transform: scale(1.1); }
+        }
+
+        .heart-icon {
+            font-size: 50px;
             color: var(--accent-color);
+            animation: heartBeat 0.8s infinite alternate;
         }
     </style>
 </head>
 <body>
 
     <div class="section">
-        <div class="heart">❤</div>
-        <h1>For My Everything</h1>
-        <p>They say time flies when you're happy. These past 3 months have been the fastest, most beautiful days of my life.</p>
-        <p style="margin-top: 50px; font-size: 0.9rem; color: #888;">(Scroll down slowly...)</p>
+        <div class="heart-icon">❤</div>
+        <h1>৩ মাস। শুধুই তুমি।</h1>
+        <p>তারা বলে সময় খুব দ্রুত চলে যায় যখন মানুষ সুখী থাকে। গত ৯০ দিন আমার জীবনের সবচেয়ে সুন্দর সময় ছিল, কারণ আমার পাশে তুমি ছিলে।</p>
+        <p style="margin-top: 40px; font-size: 0.9rem; color: #aaa;">(আস্তে আস্তে নিচে স্ক্রল করো...)</p>
     </div>
 
-    <div class="section">
-        <h2>90 Days of Memories</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <strong>Day 1:</strong> The beginning of us. I had no idea my life was about to change.
+    <div class="section" style="background-color: #fff;">
+        <h2>আমার পৃথিবীর সবচেয়ে সুন্দর দৃশ্য</h2>
+        <p>আমাদের একসাথে ছবি হয়তো কম, কিন্তু আমার গ্যালারি আর মন - দুই জায়গাতেই তুমি আছো সবচেয়ে বেশি।</p>
+        
+        <div class="gallery">
+            <div class="polaroid">
+                <img src="photo1.jpg" alt="Pic 1">
+                <div class="caption">তোমার সেই মিষ্টি হাসি</div>
             </div>
-            <div class="timeline-item">
-                <strong>Day 30:</strong> One month in, and you already became my favorite person to talk to.
+            <div class="polaroid">
+                <img src="photo2.jpg" alt="Pic 2">
+                <div class="caption">সবচেয়ে প্রিয় মুখ</div>
             </div>
-            <div class="timeline-item">
-                <strong>Day 60:</strong> Two months of laughter, deep talks, and realizing how lucky I am.
-            </div>
-            <div class="timeline-item">
-                <strong>Today:</strong> 3 months later, and I'm still falling for you every single day.
+            <div class="polaroid">
+                <img src="photo3.jpg" alt="Pic 3">
+                <div class="caption">আমার দেখা শ্রেষ্ঠ মানুষ</div>
             </div>
         </div>
     </div>
 
-    <div class="section" style="background-color: #fff;">
-        <h2>The Little Things</h2>
-        <p>It's your laugh that lights up the room, the way you care about the small details, and how you make everything feel okay just by being there.</p>
-        <p>I built this code because you deserve something as unique and special as you are.</p>
+    <div class="section">
+        <h2>আমরা একসাথে আছি...</h2>
+        <div class="timer-container">
+            <div class="timer-box"><span id="days">0</span><div class="timer-label">দিন</div></div>
+            <div class="timer-box"><span id="hours">0</span><div class="timer-label">ঘণ্টা</div></div>
+            <div class="timer-box"><span id="minutes">0</span><div class="timer-label">মিনিট</div></div>
+            <div class="timer-box"><span id="seconds">0</span><div class="timer-label">সেকেন্ড</div></div>
+        </div>
+        <p style="margin-top: 30px;">২০ ডিসেম্বর ২০২৫ থেকে আজ পর্যন্ত, প্রতিটি সেকেন্ড স্পেশাল।</p>
     </div>
 
-    <div class="section">
-        <h2>One Last Thing...</h2>
-        <button id="secret-button" onclick="revealSecret()">Click for a Secret</button>
-        <div id="final-message">
-            I love you more than words (and code) can say. Happy 3 Months! 
+    <div class="section" style="background-color: var(--soft-pink);">
+        <h2>শেষ একটি কথা</h2>
+        <p>তুমি জানো কি? এই ৩ মাসে আমি একটা জিনিস বুঝেছি। আমি তোমাকে ছাড়া আর কাউকে ভাবতে পারি না।</p>
+        <button id="secret-btn" onclick="showSecret()">গোপন কথাটি ক্লিক করো</button>
+        <div id="final-msg">
+            আমি তোমাকে অনেক ভালোবাসি। <br> শুভ ৩ মাস আমাদের ভালোবাসার! ❤️
         </div>
     </div>
 
     <script>
-        // Scroll Animation Observer
+        // Falling Hearts Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 400);
+
+        // Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.section').forEach(s => observer.observe(s));
 
-        // Secret Reveal Function
-        function revealSecret() {
-            document.getElementById('secret-button').style.display = 'none';
-            const msg = document.getElementById('final-message');
-            msg.style.display = 'block';
-            msg.style.animation = 'beat 1.5s infinite alternate';
+        // Timer Logic set to Dec 20, 2025
+        const startDate = new Date(2025, 11, 20, 0, 0, 0); 
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            
+            if (diff < 0) {
+                document.getElementById('days').innerText = "0";
+                return;
+            }
+
+            document.getElementById('days').innerText = Math.floor(diff / 86400000);
+            document.getElementById('hours').innerText = Math.floor((diff / 3600000) % 24);
+            document.getElementById('minutes').innerText = Math.floor((diff / 60000) % 60);
+            document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Reveal Secret
+        function showSecret() {
+            document.getElementById('secret-btn').style.display = 'none';
+            document.getElementById('final-msg').style.display = 'block';
+            for(let i=0; i<40; i++) setTimeout(createHeart, i*50);
         }
     </script>
 </body>
