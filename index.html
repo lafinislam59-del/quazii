@@ -5,13 +5,25 @@
 <title>For You ❤️</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
 body {
     margin: 0;
-    background: black;
     color: white;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
     overflow: hidden;
+    
+    /* 💖 aesthetic background */
+    background: linear-gradient(270deg, #ff758c, #ff7eb3, #ff9a9e, #fad0c4);
+    background-size: 800% 800%;
+    animation: bgMove 12s ease infinite;
+}
+
+@keyframes bgMove {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
 }
 
 /* pages */
@@ -23,39 +35,46 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transition: opacity 1s;
 }
 
 #page1 {
     display: flex;
 }
 
-/* text */
+/* TEXT BIGGER */
 .text {
-    font-size: 30px;
-    width: 70%;
-    line-height: 1.8;
+    font-size: 36px;
+    width: 75%;
+    line-height: 2;
+    font-family: 'Sacramento', cursive;
 }
 
 .big {
-    font-size: 42px;
+    font-size: 50px;
 }
 
 /* button */
 button {
-    margin-top: 30px;
-    padding: 12px 25px;
-    font-size: 18px;
-    border-radius: 20px;
+    margin-top: 40px;
+    padding: 15px 30px;
+    font-size: 20px;
+    border-radius: 30px;
     border: none;
     cursor: pointer;
-    background: white;
-    color: black;
+    background: rgba(255,255,255,0.3);
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.15);
+    background: rgba(255,255,255,0.5);
 }
 
 /* heart */
 .heart {
-    font-size: 90px;
+    font-size: 100px;
     animation: beat 1s infinite;
 }
 
@@ -83,58 +102,62 @@ button {
 <!-- PAGE 1 -->
 <div id="page1" class="page">
     <div class="text" id="text1"></div>
-    <button onclick="nextPage(2)">Continue...</button>
+    <button onclick="nextPage(2)">Continue ❤️</button>
 </div>
 
 <!-- PAGE 2 -->
 <div id="page2" class="page">
     <div class="text fadeIn">
-        I don't know when it started...  
-        Maybe in a random conversation...  
-        Maybe in your smile...  
+        It's been 3 months with you... 💖  
 
-        But slowly...  
-        You became my favorite part of the day... 💭
+        And honestly...  
+        These 3 months felt more special than anything...  
+
+        Every moment with you...  
+        Became a memory I never want to lose... ✨
     </div>
-    <button onclick="nextPage(3)">Continue...</button>
+    <button onclick="nextPage(3)">Continue 💕</button>
 </div>
 
 <!-- PAGE 3 -->
 <div id="page3" class="page">
     <div class="text fadeIn">
-        There are thousands of people in this world...  
-        But my heart chose YOU... ❤️  
+        In just 3 months...  
+        You became my comfort... my happiness... ❤️  
 
-        Not perfect...  
-        Not flawless...  
-        But perfectly mine... ✨
+        You became the person I think about all the time...  
+
+        And somehow...  
+        You became my favorite place in this whole world... 🌸
     </div>
-    <button onclick="nextPage(4)">Continue...</button>
+    <button onclick="nextPage(4)">Continue 💖</button>
 </div>
 
 <!-- FINAL PAGE -->
 <div id="page4" class="page">
     <div class="heart">❤️</div>
     <div class="big fadeIn">
-        I didn't just fall for you...  
-        I found home in you... 💖  
+        Happy 3 Months... 💕  
 
-        And if I had to choose again...  
-        I would still choose YOU...  
-        Every single time... 🌙
+        I didn't just fall for you...  
+        I found something real in you... 💖  
+
+        And I promise...  
+        This is just the beginning of our story... ✨
     </div>
 </div>
 
 <script>
 
-// typing effect
-const text = `Hey... 💭
+// typing effect (first page)
+const text = `Hey... 💭  
 
-I wanted to tell you something...  
-Not just something random...  
-Something real...  
+I wanted to tell you something special...  
 
-So... just read this till the end... ❤️`;
+Because today is not just another day...  
+It's our 3 months... ❤️  
+
+So... just read this till the end... 💖`;
 
 let i = 0;
 
@@ -147,14 +170,9 @@ function typing() {
 }
 typing();
 
-// smooth page switch
+// page switch
 function nextPage(num) {
-    const current = document.querySelector(".page[style*='flex'], #page1");
-    
-    document.querySelectorAll(".page").forEach(p => {
-        p.style.display = "none";
-    });
-
+    document.querySelectorAll(".page").forEach(p => p.style.display="none");
     const next = document.getElementById("page"+num);
     next.style.display = "flex";
     next.classList.add("fadeIn");
